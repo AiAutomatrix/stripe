@@ -1,15 +1,14 @@
 {
-  "name": "stripe-sample",
-  "version": "1.0.0",
-  "description": "A sample Stripe implementation",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "author": "stripe-samples",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.17.1",
-    "stripe": "^13.0.0"
-  }
+	"dependencies": {
+		"@botpress/client": "^0.17.0",
+		"@botpress/sdk": "^0.8.10",
+		"axios": "^1.6.8",
+		"zod": "^3.23.8"
+	},
+	"devDependencies": {
+		"@botpress/cli": "^0.8.14",
+		"@types/node": "^20.12.12",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.4.5"
+	}
 }

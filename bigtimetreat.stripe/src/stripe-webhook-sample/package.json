@@ -2,9 +2,10 @@
   "name": "stripe-sample",
   "version": "1.0.0",
   "description": "A sample Stripe implementation",
-  "main": "server.js",
+  "main": "src/server.js",
+  "type": "module",
   "scripts": {
-    "start": "node server.js",
+    "start": "node src/server.js",
     "version": "bp --version",
     "login": "bp login",
     "gen": "bp gen",
@@ -13,6 +14,7 @@
   "author": "stripe-samples",
   "license": "ISC",
   "dependencies": {
+    "all": "^0.0.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "stripe": "^13.0.0"

@@ -17,6 +17,9 @@ importers:
       all:
         specifier: ^0.0.0
         version: 0.0.0
+      axios:
+        specifier: ^1.7.1
+        version: 1.7.1
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -119,8 +122,8 @@ packages:
   asynckit@0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
 
-  axios@1.6.8:
-    resolution: {integrity: sha512-v/ZHtJDU39mDpyBoFVkETcd/uNdxrWRrg3bKpOKzXFA6Bvqopts6ALSMU3y6ijYxbw2B+wPrIv46egTzJXCLGQ==}
+  axios@1.7.1:
+    resolution: {integrity: sha512-+LV37nQcd1EpFalkXksWNBiA17NZ5m5/WspmHGmZmdx1qBOg/VNq/c4eRJiA9VQQHBOs+N0ZhhdU10h2TyNK7Q==}
 
   body-parser@1.20.2:
     resolution: {integrity: sha512-ml9pReCu3M61kGlqoTm2umSXTlRTuGTx0bfYj+uIUKKYycG5NtSbeetV3faSU6R7ajOPw0g/J1PvK4qNy7s5bA==}
@@ -473,7 +476,7 @@ snapshots:
 
   '@botpress/client@0.17.0':
     dependencies:
-      axios: 1.6.8
+      axios: 1.7.1
       browser-or-node: 2.1.1
       type-fest: 3.13.1
     transitivePeerDependencies:
@@ -540,7 +543,7 @@ snapshots:
 
   asynckit@0.4.0: {}
 
-  axios@1.6.8:
+  axios@1.7.1:
     dependencies:
       follow-redirects: 1.15.6
       form-data: 4.0.0

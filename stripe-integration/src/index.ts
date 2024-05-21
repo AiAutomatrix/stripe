@@ -1,6 +1,11 @@
 import * as sdk from '@botpress/sdk'
 import * as bp from '.botpress'
 
+// Dynamically import actions and channels from the implementation directory
+const actions = require('./.botpress/implementation/actions');
+const channels = require('./.botpress/implementation/channels');
+
+
 export default new bp.Integration({
   register: async () => {
     /**
@@ -16,7 +21,9 @@ export default new bp.Integration({
      */
     throw new sdk.RuntimeError('Invalid configuration') // replace this with your own validation logic
   },
-  actions: {},
-  channels: {},
-  handler: async () => {},
+  actions: actions.default || {}, // Ensure a default value if no actions are exported
+  channels: channels.default || {}, // Ensure a default value if no channels are exported
+  handler: async () => {
+    // Your handler logic here
+  },
 })

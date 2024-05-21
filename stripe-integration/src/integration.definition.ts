@@ -2,7 +2,7 @@
 // Import necessary modules and definitions
 import { IntegrationDefinition } from '@botpress/sdk'; // This imports the IntegrationDefinition class from Botpress SDK.
 import z from 'zod'; // This imports zod, a library used for building schemas.
-import { integrationName } from './package.json';
+import { integrationName } from '../package.json';
 import * as sdk from "@botpress/sdk";
 
 // Note: if you have issues related to the name of the integration, try importing it from another file.

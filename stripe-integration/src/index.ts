@@ -1,6 +1,5 @@
 import * as sdk from '@botpress/sdk'
 import * as bp from '.botpress'
-import { IntegrationDefinition } from "@botpress/sdk";
 
 export default new bp.Integration({
   register: async () => {
@@ -19,10 +18,5 @@ export default new bp.Integration({
   },
   actions: {},
   channels: {},
-  handler: async () => {
-    
-  },
+  handler: async () => {},
 })
-
-
-

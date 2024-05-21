@@ -19,14 +19,14 @@ export * as events from "./events/index"
 export * as states from "./states/index"
 
 type TIntegration = {
-  name: "bigtimetreat"
-  version: "0.0.2"
+  name: "empty-integration"
+  version: "0.0.1"
   configuration: configuration.Configuration
   actions: actions.Actions
   channels: channels.Channels
   events: events.Events
   states: states.States
-  user: { "tags": { "id": { "title": "User ID", "description": "User ID from Stripe" } }, "creation": { "enabled": false, "requiredTags": [] } }
+  user: { "tags": {}, "creation": { "enabled": false, "requiredTags": [] } }
 }
 
 export type IntegrationProps = sdk.IntegrationProps<TIntegration>

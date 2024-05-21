@@ -5,7 +5,6 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface Configuration {
-  Publishablekey: string;
-  Secretkey: string;
+export interface Output {
+  id: string;
 }

@@ -1,12 +1,11 @@
 {
-    "botId": "your-bot-id",
-    "integrationId": "your-integration-id",
-    "version": "0.0.2",
-    "name": "your-integration-name",
-    "description": "Description of your integration",
-    "configuration": {
-      "apiKey": "your-api-key",
-      "teamId": "your-team-id"
-    }
+  "botId": "your-bot-id",
+  "integrationId": "your-integration-id",
+  "version": "0.0.2",
+  "name": "your-integration-name",
+  "description": "Description of your integration",
+  "configuration": {
+    "apiKey": "your-api-key",
+    "teamId": "your-team-id"
   }
-  
+}

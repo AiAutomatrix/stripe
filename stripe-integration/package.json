@@ -3,7 +3,7 @@
   "integrationName": "bigtimetreat",
   "scripts": {
     "type:check": "tsc --noEmit",
-    "start": "ts-node src/index.ts",
+    "start": "ts-node /workspaces/stripe/stripe-integration/src/integration.ts",
     "version": "bp --version",
     "login": "bp login",
     "gen": "bp gen",

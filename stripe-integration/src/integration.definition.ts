@@ -1,69 +1,47 @@
-import { IntegrationDefinition } from '@botpress/sdk';
-import z from 'zod';
-import { integrationName } from '../package.json';
-
-const INTEGRATION_NAME = integrationName;
-
-export default new IntegrationDefinition({
-  name: INTEGRATION_NAME,
-  version: '0.0.2',
+// integration.definition.ts
+import * as sdk from "@botpress/sdk";
+import { z } from "zod";
+ 
+export default new sdk.IntegrationDefinition({
+  name: "myintegration",
+  version: "0.1.0",
+  public: true,
   configuration: {
     schema: z.object({
-      apiKey: z.string(),
-      teamId: z.string(),
-    })
+      appId: z.string(),
+      appSecret: z.string(),
+    }),
   },
-  events: {
-    taskCreated: {
-      schema: z.object({ id: z.string() })
+  channels: {
+    channel: {
+      messages: {
+        text: sdk.messages.defaults.text,
+        image: sdk.messages.defaults.image,
+      },
+      tags: {
+        messages: ["id"],
+        conversations: ["id"],
+      },
     },
   },
+  tags: {
+    users: ["id"],
+  },
   actions: {
-    createTask: {
+    fetchInventory: {
       input: {
         schema: z.object({
-          listId: z.string(),
-          name: z.string(),
-          description: z.string().optional()
-        })
+          itemId: z.string(),
+        }),
       },
       output: {
-        schema: z.object({ id: z.string() })
-      }
-    }
-  },
-  icon: 'icon.svg',
-  channels: {
-    comment: {
-      messages: {
-        text: {
-          schema: z.object({ text: z.string() })
-        }
+        schema: z.object({
+          name: z.string(),
+          price: z.number(),
+        }),
       },
-      message: {
-        tags: {
-          id: {
-            title: "Message ID",
-            description: "Message ID from Stripe"
-          }
-        }
-      },
-      conversation: {
-        tags: {
-          taskId: {
-            title: "Task ID",
-            description: "Task ID from Stripe"
-          }
-        }
-      }
-    }
+    },
   },
-  user: {
-    tags: {
-      id: {
-        title: "User ID",
-        description: "User ID from Stripe"
-      }
-    }
-  }
+  events: {},
+  states: {},
 });

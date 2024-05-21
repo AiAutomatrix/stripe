@@ -1,59 +1,55 @@
-// Importing necessary modules and defining the baseURL of the ClickUp API.
-import axios, { AxiosInstance } from 'axios'
-const baseURL = 'https://buy.stripe.com/test_aEUeXkgrF7eO71S4gi'
- 
-// Declaring the StripeClient class.
+import axios from 'axios';
+
 export class StripeClient {
-  private axios: AxiosInstance  // Instance of Axios to make HTTP requests.
- 
-  // Constructor to initialize the ClickUpClient with token and teamId.
-  constructor(private token: string, private teamId: string) {
-    this.axios = axios.create({
-      baseURL,  // Setting the base URL for the API.
-      headers: { Authorization: this.token },  // Setting the Authorization header with the token.
-    })
+  private apiKey: string;
+  private teamId: string;
+
+  constructor(apiKey: string, teamId: string) {
+    this.apiKey = apiKey;
+    this.teamId = teamId;
   }
- 
-  // Method to get user information.
+
   async getUser() {
-    const { data } = await this.axios.get('/user')
-    return data.user
+    const response = await axios.get('https://api.stripe.com/v1/users', {
+      headers: { Authorization: `Bearer ${this.apiKey}` }
+    });
+    return response.data;
   }
- 
-  // Method to list all the webhooks.
+
+  async createTask(input: any) {
+    const response = await axios.post('https://api.stripe.com/v1/tasks', input, {
+      headers: { Authorization: `Bearer ${this.apiKey}` }
+    });
+    return response.data;
+  }
+
+  async createComment(comment: { text: string; taskId: string }) {
+    const response = await axios.post(`https://api.stripe.com/v1/tasks/${comment.taskId}/comments`, {
+      text: comment.text
+    }, {
+      headers: { Authorization: `Bearer ${this.apiKey}` }
+    });
+    return response.data;
+  }
+
   async listWebhooks() {
-    const { data } = await this.axios.get(`/team/${this.teamId}/webhook`)
-    return data.webhooks
+    const response = await axios.get('https://api.stripe.com/v1/webhooks', {
+      headers: { Authorization: `Bearer ${this.apiKey}` }
+    });
+    return response.data;
   }
- 
-  // Method to create a new webhook.
-  async createWebhook(body: { endpoint: string, events: string[] }) {
-    const { data } = await this.axios.post(`/team/${this.teamId}/webhook`, body)
-    return data
+
+  async createWebhook(webhook: { endpoint: string; events: string[] }) {
+    const response = await axios.post('https://api.stripe.com/v1/webhooks', webhook, {
+      headers: { Authorization: `Bearer ${this.apiKey}` }
+    });
+    return response.data;
   }
- 
-  // Method to update an existing webhook.
-  async updateWebhook({ webhookId, ...body }: { webhookId: string, endpoint: string, events: string[]; status: 'active' }) {
-    const { data } = await this.axios.put(`/webhook/${webhookId}`, body)
-    return data
-  }
- 
-  // Method to create a new comment on a task.
-  async createComment({ taskId, text }: { taskId: string, text: string }) {
-    const user = await this.getUser()
-    const { data } = await this.axios.post(`/task/${taskId}/comment`, { comment_text: text, notify_all: false, assignee: user.id })
-    return data
-  }
- 
-  // Method to create a new task in a list.
-  async createTask({ name, description, listId }: { listId: string; name: string, description?: string }) {
-    const { data } = await this.axios.post(`/list/${listId}/task`, { name, description })
-    return data
-  }
- 
-  // Method to get information about a task.
-  async getTask(taskId: string) {
-    const { data } = await this.axios.get(`/task/${taskId}`)
-    return data
+
+  async updateWebhook(webhook: { endpoint: string; status: string; webhookId: string; events: string[] }) {
+    const response = await axios.put(`https://api.stripe.com/v1/webhooks/${webhook.webhookId}`, webhook, {
+      headers: { Authorization: `Bearer ${this.apiKey}` }
+    });
+    return response.data;
   }
 }

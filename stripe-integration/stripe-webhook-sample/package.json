@@ -1,0 +1,22 @@
+{
+  "name": "stripe-sample",
+  "version": "1.0.0",
+  "description": "A sample Stripe implementation",
+  "main": "/workspaces/stripe/stripe.bigtimetreat/src/stripe-webhook-sample/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "version": "bp --version",
+    "login": "bp login",
+    "gen": "bp gen",
+    "deploy": "bp deploy"
+  },
+  "author": "stripe-samples",
+  "license": "ISC",
+  "dependencies": {
+    "all": "^0.0.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "stripe": "^13.0.0"
+  }
+}

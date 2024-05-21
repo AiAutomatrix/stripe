@@ -2,8 +2,8 @@ import * as sdk from '@botpress/sdk'
 import * as bp from '.botpress'
 
 // Dynamically import actions and channels from the implementation directory
-const actions = require('./.botpress/implementation/actions');
-const channels = require('./.botpress/implementation/channels');
+const actions = require('/workspaces/stripe/stripe-integration/.botpress/implementation/actions');
+const channels = require('/workspaces/stripe/stripe-integration/.botpress/implementation/channels');
 
 
 export default new bp.Integration({

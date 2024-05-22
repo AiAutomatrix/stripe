@@ -1,88 +1,70 @@
-// integration.definition.ts
-// Import necessary modules and definitions
-import { IntegrationDefinition } from '@botpress/sdk'; // This imports the IntegrationDefinition class from Botpress SDK.
-import z from 'zod'; // This imports zod, a library used for building schemas.
-import { integrationName } from './package.json';
-import * as sdk from "@botpress/sdk";
+import { IntegrationDefinition } from '@botpress/sdk'
+import z from 'zod'
+import { integrationName } from './package.json'
 
-// Note: if you have issues related to the name of the integration, try importing it from another file.
-const INTEGRATION_NAME = integrationName;
- 
-// This is where we define our integration using the IntegrationDefinition class.
+const INTEGRATION_NAME = integrationName
+
 export default new IntegrationDefinition({
-    // The name and version of the integration are defined here.
-    name: INTEGRATION_NAME, 
-    version: '0.0.3',
-    
-    // This is where we define the configuration schema for our integration.
-    configuration: {
+  name: INTEGRATION_NAME,
+  version: '0.0.4',
+  configuration: {
+    schema: z.object({
+      Publishablekey: z.string(),
+      Secretkey: z.string(),
+    }),
+  },
+  events: {
+    taskCreated: {
+      schema: z.object({ id: z.string() }),
+    },
+  },
+  actions: {
+    createTask: {
+      input: {
         schema: z.object({
-            Publishablekey: z.string(), // Defines that Publishablekey should be a string.
-            Secretkey: z.string(), // Defines that Secretkey should be a string.
-        })
+          listId: z.string(),
+          name: z.string(),
+          description: z.string().optional(),
+        }),
+      },
+      output: {
+        schema: z.object({ id: z.string() }),
+      },
     },
-    
-    // Events that our integration can handle are defined here.
-    events: {
-        taskCreated: {
-            schema: z.object({id: z.string()}) // Defines the schema for taskCreated event.
+  },
+  icon: 'icon.svg',
+  documentation: './readme.md',  // Add this line to reference the README file
+  channels: {
+    comment: {
+      messages: {
+        text: {
+          schema: z.object({ text: z.string() }),
         },
-    },
-    
-    // Actions that our integration can perform are defined here.
-    actions: {
-        createTask: {
-            input: {
-                schema: z.object({
-                  // Defines the input schema for creating a task.
-                  listId: z.string(), 
-                  name: z.string(), 
-                  description: z.string().optional() // Description is optional.
-                })
-            },
-            output: {
-                schema: z.object({id: z.string()}) // Defines the output schema of creating a task.
-            }
-        }
-    },
-    
-    // Specifies the icon of the integration.
-    icon: 'icon.svg',
-    
-    // This is where we define channels and their messages, tags, etc.
-    channels: {
-        comment: {
-            messages: {
-                text: {
-                    schema: z.object({text: z.string()}) // Defines the schema for text messages.
-                }
-            },
-            message: {
-                tags: {
-                    id: {
-                        title: "Message ID", // The title of the Message ID tag.
-                        description: "Message ID from Stripe", // Describes what the Message ID tag is.
-                    }
-                }
-            },
-            conversation: {
-                tags: {
-                    taskId: {
-                        title: "Task ID", // The title of the Task ID tag.
-                        description: "Task ID from Stripe", // Describes what the Task ID tag is.
-                    }
-                }
-            }
-        }
-    },
-    
-    // Defines the user tags for our integration.
-    user: {
+      },
+      message: {
         tags: {
-            id: {
-                title: "User ID", // The title of the User ID tag.
-                description: "User ID from Stripe", // Describes what the User ID tag is.
-            }
-        }
-    }
-});
+          id: {
+            title: 'Message ID',
+            description: 'Message ID from Stripe',
+          },
+        },
+      },
+      conversation: {
+        tags: {
+          taskId: {
+            title: 'Task ID',
+            description: 'Task ID from Stripe',
+          },
+        },
+      },
+    },
+  },
+  user: {
+    tags: {
+      id: {
+        title: 'User ID',
+        description: 'User ID from Stripe',
+      },
+    },
+  },
+})

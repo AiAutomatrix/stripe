@@ -10,6 +10,11 @@
     "deploy": "bp deploy"
   },
   "private": true,
+  "files": [
+    "src/index.ts",
+    "src/integration.definition.ts",
+    "readme.md"
+  ],
   "dependencies": {
     "@botpress/client": "0.17.0",
     "@botpress/sdk": "0.8.10",

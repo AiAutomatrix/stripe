@@ -1,9 +1,9 @@
 import { IntegrationDefinition } from '@botpress/sdk';
 import * as sdk from '@botpress/sdk';
 import z from 'zod';
-import { integrationName } from './package.json';
 
-const INTEGRATION_NAME = integrationName;
+
+const INTEGRATION_NAME = 'stripe-integration';
 
 export default new IntegrationDefinition({
   name: INTEGRATION_NAME,
@@ -34,7 +34,7 @@ export default new IntegrationDefinition({
     },
   },
   icon: 'icon.svg',
-  documentation: './readme.md',
+  documentation: '/workspaces/stripe/stripe-integration/readme.md',
   channels: {
     comment: {
       messages: {

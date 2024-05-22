@@ -1,5 +1,4 @@
-import * as botpress from '@botpress/sdk'; // Correct the import path if necessary
-import { StripeClient } from './client'; // Import the StripeClient from client.ts
+import * as botpress from '.botpress' // Correct the import path as necessary
 
 const logger = console;
 logger.info('starting integration');
@@ -11,28 +10,24 @@ class NotImplementedError extends Error {
 }
 
 export default new botpress.Integration({
-  register: async ({ config, secrets }) => {
+  register: async () => {
     /**
-     * This is called when a bot installs the integration.
-     * You should use this handler to instantiate resources in the external service and ensure that the configuration is valid.
+     * This is called when a bot installs the integration,
+     * You should use this handler to instantiate resources in the external service and ensure that the configuration is valid,
      */
-    const stripeClient = new StripeClient(secrets.Secretkey);
-    logger.info('Stripe client initialized');
-    return { stripeClient };
   },
   unregister: async () => {
     /**
-     * This is called when a bot uninstalls the integration.
-     * You should use this handler to clean up resources in the external service.
+     * This is called when a bot uninstalls the integration,
+     * You should use this handler to clean up resources in the external service,
      */
-    logger.info('Integration unregistered');
+  },
+  handler: async () => {
+    throw new NotImplementedError();
   },
   actions: {
-    createTask: async ({ req, ctx }) => {
-      const { stripeClient } = ctx;
-      const { listId, name, description } = req.params;
-      const task = await stripeClient.createTask(listId, name, description);
-      return { id: task.id };
+    createTask: async () => {
+      // Implement your createTask action here
     }
   },
   channels: {
@@ -72,9 +67,7 @@ export default new botpress.Integration({
           throw new NotImplementedError();
         },
       },
-      handler: async () => {
-        throw new NotImplementedError();
-      },
+      
     },
   },
 });

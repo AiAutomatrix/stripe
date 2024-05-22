@@ -1,85 +1,86 @@
+import { IntegrationDefinition } from '@botpress/sdk';
 import * as sdk from '@botpress/sdk';
-import { Integration } from '@botpress/sdk';
-import integrationDefinition from './integration.definition'; // Import the IntegrationDefinition from your file
+import z from 'zod';
+import { integrationName } from './package.json';
 
-const integration = new Integration({
-  definition: integrationDefinition, // Use the imported integrationDefinition
-  register: async (props) => {
-    const { client, configuration } = props;
+const INTEGRATION_NAME = integrationName;
 
-    if (!configuration.Publishablekey || !configuration.Secretkey) {
-      throw new sdk.RuntimeError('Invalid configuration: Missing API keys');
-    }
-
-    try {
-      const stripe = require('stripe')(configuration.Secretkey);
-
-      await stripe.balance.retrieve();
-
-      console.log('Stripe integration registered successfully');
-    } catch (error) {
-      console.error('Stripe registration error:', error);
-      throw new sdk.RuntimeError('Invalid Stripe API keys');
-    }
+export default new IntegrationDefinition({
+  name: INTEGRATION_NAME,
+  version: '0.0.4',
+  configuration: {
+    schema: z.object({
+      Publishablekey: z.string(),
+      Secretkey: z.string(),
+    }),
   },
-
-  unregister: async (props) => {
-    const { client, configuration } = props;
-
-    try {
-      console.log('Stripe integration unregistered successfully');
-    } catch (error) {
-      console.error('Unregistration error:', error);
-    }
-  },
-
-  actions: {
-    createTask: async (props) => {
-      const { client, configuration, event, action, ctx } = props;
-
-      try {
-        const stripe = require('stripe')(configuration.Secretkey);
-        const { listId, name, description } = action.input;
-
-        const task = await stripe.tasks.create({
-          list: listId,
-          name,
-          description,
-        });
-
-        return { id: task.id };
-      } catch (error) {
-        console.error('Error creating task:', error);
-        throw new sdk.RuntimeError('Error creating task: ' + error.message);
-      }
+  events: {
+    taskCreated: {
+      schema: z.object({ id: z.string() }),
     },
   },
-
+  actions: {
+    createTask: {
+      input: {
+        schema: z.object({
+          listId: z.string(),
+          name: z.string(),
+          description: z.string().optional(),
+        }),
+      },
+      output: {
+        schema: z.object({ id: z.string() }),
+      },
+    },
+  },
+  icon: 'icon.svg',
+  documentation: './readme.md',
   channels: {
     comment: {
       messages: {
-        text: async (props) => {
-          const { client, configuration, event, message, ctx } = props;
-          const { text } = message;
-
-          try {
-            const stripe = require('stripe')(configuration.Secretkey);
-
-            const response = await stripe.processMessage(text);
-
-            return response;
-          } catch (error) {
-            console.error('Error processing message:', error);
-            throw new sdk.RuntimeError('Error processing message: ' + error.message);
-          }
+        text: {
+          schema: z.object({ text: z.string() }),
+        },
+      },
+      message: {
+        tags: {
+          id: {
+            title: 'Message ID',
+            description: 'Message ID from Stripe',
+          },
+        },
+      },
+      conversation: {
+        tags: {
+          taskId: {
+            title: 'Task ID',
+            description: 'Task ID from Stripe',
+          },
         },
       },
     },
   },
-
-  handler: async (props) => {
-    const { client, configuration, event, ctx } = props;
+  user: {
+    tags: {
+      id: {
+        title: 'User ID',
+        description: 'User ID from Stripe',
+      },
+    },
+  },
+  register: async () => {
+    // This is called when a bot installs the integration.
+    // You should use this handler to instanciate resources in the external service and ensure that the configuration is valid.
+    throw new sdk.RuntimeError('Invalid configuration'); // Replace this with your own validation logic
+  },
+  unregister: async () => {
+    // This is called when a bot removes the integration.
+    // You should use this handler to instanciate resources in the external service and ensure that the configuration is valid.
+    throw new sdk.RuntimeError('Invalid configuration'); // Replace this with your own validation logic
+  },
+  handler: async () => {
+    // This is where you can define the main handler logic for your integration.
+    // This function will be executed when the integration receives events or actions.
+    // You can implement the necessary logic here to handle events and actions from Botpress.
   },
 });
-
-export default integration;

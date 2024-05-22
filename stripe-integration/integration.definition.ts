@@ -1,3 +1,4 @@
+//integration.definition.ts
 import { IntegrationDefinition } from '@botpress/sdk';
 import z from 'zod';
 import { name as integrationName } from './package.json';

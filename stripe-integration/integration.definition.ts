@@ -1,8 +1,8 @@
-import { IntegrationDefinition } from '@botpress/sdk'
-import z from 'zod'
-import { integrationName } from './package.json'
+import { IntegrationDefinition } from '@botpress/sdk';
+import z from 'zod';
+import { name as integrationName } from './package.json';
 
-const INTEGRATION_NAME = integrationName
+const INTEGRATION_NAME = integrationName;
 
 export default new IntegrationDefinition({
   name: INTEGRATION_NAME,
@@ -33,7 +33,7 @@ export default new IntegrationDefinition({
     },
   },
   icon: 'icon.svg',
-  documentation: './readme.md',  // Add this line to reference the README file
+  documentation: './readme.md',
   channels: {
     comment: {
       messages: {
@@ -67,4 +67,4 @@ export default new IntegrationDefinition({
       },
     },
   },
-})
+});

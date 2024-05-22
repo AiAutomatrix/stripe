@@ -1,56 +1,55 @@
-import * as sdk from '@botpress/sdk'
-import { Integration, IntegrationProps } from '@botpress/sdk'
-import { integrationDefinition } from '@botpress/sdk'
-import * as bp from '.botpress'
+import * as sdk from '@botpress/sdk';
+import { Integration, IntegrationProps } from '@botpress/sdk';
+import * as bp from '.botpress';
 
 const integration = new Integration({
   register: async (props: IntegrationProps) => {
-    const { client, configuration } = props
+    const { client, configuration } = props;
 
     if (!configuration.Publishablekey || !configuration.Secretkey) {
-      throw new sdk.RuntimeError('Invalid configuration: Missing API keys')
+      throw new sdk.RuntimeError('Invalid configuration: Missing API keys');
     }
 
     try {
-      const stripe = require('stripe')(configuration.Secretkey)
+      const stripe = require('stripe')(configuration.Secretkey);
 
-      await stripe.balance.retrieve()
+      await stripe.balance.retrieve();
 
-      console.log('Stripe integration registered successfully')
+      console.log('Stripe integration registered successfully');
     } catch (error) {
-      console.error('Stripe registration error:', error)
-      throw new sdk.RuntimeError('Invalid Stripe API keys')
+      console.error('Stripe registration error:', error);
+      throw new sdk.RuntimeError('Invalid Stripe API keys');
     }
   },
 
   unregister: async (props: IntegrationProps) => {
-    const { client, configuration } = props
+    const { client, configuration } = props;
 
     try {
-      console.log('Stripe integration unregistered successfully')
+      console.log('Stripe integration unregistered successfully');
     } catch (error) {
-      console.error('Unregistration error:', error)
+      console.error('Unregistration error:', error);
     }
   },
 
   actions: {
     createTask: async (props: sdk.ActionProps) => {
-      const { client, configuration, event, action, ctx } = props
+      const { client, configuration, event, action, ctx } = props;
 
       try {
-        const stripe = require('stripe')(configuration.Secretkey)
-        const { listId, name, description } = action.input
+        const stripe = require('stripe')(configuration.Secretkey);
+        const { listId, name, description } = action.input;
 
         const task = await stripe.tasks.create({
           list: listId,
           name,
           description,
-        })
+        });
 
-        return { id: task.id }
+        return { id: task.id };
       } catch (error) {
-        console.error('Error creating task:', error)
-        throw new sdk.RuntimeError('Error creating task: ' + error.message)
+        console.error('Error creating task:', error);
+        throw new sdk.RuntimeError('Error creating task: ' + (error as Error).message);
       }
     },
   },
@@ -59,18 +58,18 @@ const integration = new Integration({
     comment: {
       messages: {
         text: async (props: sdk.MessageProps) => {
-          const { client, configuration, event, message, ctx } = props
-          const { text } = message
+          const { client, configuration, event, message, ctx } = props;
+          const { text } = message;
 
           try {
-            const stripe = require('stripe')(configuration.Secretkey)
+            const stripe = require('stripe')(configuration.Secretkey);
 
-            const response = await stripe.processMessage(text)
+            const response = await stripe.processMessage(text);
 
-            return response
+            return response;
           } catch (error) {
-            console.error('Error processing message:', error)
-            throw new sdk.RuntimeError('Error processing message: ' + error.message)
+            console.error('Error processing message:', error);
+            throw new sdk.RuntimeError('Error processing message: ' + (error as Error).message);
           }
         },
       },
@@ -78,8 +77,8 @@ const integration = new Integration({
   },
 
   handler: async (props: sdk.HandlerProps) => {
-    const { client, configuration, event, ctx } = props
+    const { client, configuration, event, ctx } = props;
   },
-})
+});
 
-export default integration
+export default integration;

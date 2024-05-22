@@ -1,6 +1,6 @@
 import * as sdk from '@botpress/sdk'
 import { Integration, IntegrationProps } from '@botpress/sdk'
-import integrationDefinition from '/workspaces/stripe/stripe-integration/integration.definition.ts'
+import { integrationDefinition } from '@botpress/sdk'
 import * as bp from '.botpress'
 
 const integration = new Integration({

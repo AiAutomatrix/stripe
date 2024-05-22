@@ -1,7 +1,7 @@
 import { IntegrationDefinition } from '@botpress/sdk';
 import * as sdk from '@botpress/sdk';
 import z from 'zod';
-
+import { StripeClient } from './client'; // Import the StripeClient from client.ts
 
 const INTEGRATION_NAME = 'stripe-integration';
 
@@ -68,19 +68,19 @@ export default new IntegrationDefinition({
       },
     },
   },
-  register: async () => {
-    // This is called when a bot installs the integration.
-    // You should use this handler to instanciate resources in the external service and ensure that the configuration is valid.
-    throw new sdk.RuntimeError('Invalid configuration'); // Replace this with your own validation logic
+  register: async ({ config, secrets }) => {
+    // Initialize the Stripe client with the provided secret key
+    const stripeClient = new StripeClient(secrets.Secretkey);
+
+    // Store the Stripe client instance in the integration's context
+    return {
+      stripeClient,
+    };
   },
   unregister: async () => {
-    // This is called when a bot removes the integration.
-    // You should use this handler to instanciate resources in the external service and ensure that the configuration is valid.
-    throw new sdk.RuntimeError('Invalid configuration'); // Replace this with your own validation logic
+    // Cleanup logic when the integration is uninstalled
   },
-  handler: async () => {
-    // This is where you can define the main handler logic for your integration.
-    // This function will be executed when the integration receives events or actions.
-    // You can implement the necessary logic here to handle events and actions from Botpress.
+  handler: async (event, ctx) => {
+    // Handle incoming events/actions here using the Stripe client
   },
 });

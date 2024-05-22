@@ -1,4 +1,3 @@
-//integration.definition.ts
 import { IntegrationDefinition } from '@botpress/sdk';
 import z from 'zod';
 import { name as integrationName } from './package.json';
@@ -67,5 +66,20 @@ export default new IntegrationDefinition({
         description: 'User ID from Stripe',
       },
     },
+  },
+  register: async ({ config, secrets }) => {
+    // Initialize the Stripe client with the provided secret key
+    const stripeClient = new StripeClient(secrets.Secretkey);
+
+    // Store the Stripe client instance in the integration's context
+    return {
+      stripeClient,
+    };
+  },
+  unregister: async () => {
+    // Cleanup logic when the integration is uninstalled
+  },
+  handler: async (event, ctx) => {
+    // Handle incoming events/actions here using the Stripe client
   },
 });

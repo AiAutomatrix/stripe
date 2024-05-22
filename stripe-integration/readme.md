@@ -1,4 +1,4 @@
-readme.md file
+
 # Stripe Integration
 
 This integration allows you to connect your Botpress bot with Stripe for processing payments, handling webhooks, and managing customer data.

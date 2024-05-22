@@ -32,7 +32,7 @@ type Simplify<T> = T extends (...args: infer A) => infer R
 
 type TIntegration = {
   name: "bigtimetreat"
-  version: "0.0.4"
+  version: "0.1.1"
   configuration: configuration.Configuration
   actions: actions.Actions
   channels: channels.Channels

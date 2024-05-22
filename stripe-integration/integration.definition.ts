@@ -6,7 +6,7 @@ const INTEGRATION_NAME = integrationName;
 
 export default new IntegrationDefinition({
   name: INTEGRATION_NAME,
-  version: '0.0.4',
+  version: '0.1.1',
   configuration: {
     schema: z.object({
       Publishablekey: z.string(),
@@ -66,20 +66,5 @@ export default new IntegrationDefinition({
         description: 'User ID from Stripe',
       },
     },
-  },
-  register: async ({ config, secrets }) => {
-    // Initialize the Stripe client with the provided secret key
-    const stripeClient = new StripeClient(secrets.Secretkey);
-
-    // Store the Stripe client instance in the integration's context
-    return {
-      stripeClient,
-    };
-  },
-  unregister: async () => {
-    // Cleanup logic when the integration is uninstalled
-  },
-  handler: async (event, ctx) => {
-    // Handle incoming events/actions here using the Stripe client
   },
 });

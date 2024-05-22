@@ -1,86 +1,52 @@
-import { IntegrationDefinition } from '@botpress/sdk';
-import * as sdk from '@botpress/sdk';
-import z from 'zod';
+import * as botpress from '@botpress/sdk'; // Correct the import path if necessary
 import { StripeClient } from './client'; // Import the StripeClient from client.ts
 
-const INTEGRATION_NAME = 'stripe-integration';
+const logger = console;
+logger.info('starting integration');
 
-export default new IntegrationDefinition({
-  name: INTEGRATION_NAME,
-  version: '0.0.4',
-  configuration: {
-    schema: z.object({
-      Publishablekey: z.string(),
-      Secretkey: z.string(),
-    }),
+class NotImplementedError extends Error {
+  constructor() {
+    super('Not Implemented');
+  }
+}
+
+export default new botpress.Integration({
+  register: async ({ ctx, configuration }: botpress.IntegrationProps) => {
+    /**
+     * This is called when a bot installs the integration.
+     * You should use this handler to instantiate resources in the external service and ensure that the configuration is valid.
+     */
+    ctx.state.stripeClient = new StripeClient(configuration.Secretkey);
+    logger.info('Stripe client initialized');
   },
-  events: {
-    taskCreated: {
-      schema: z.object({ id: z.string() }),
-    },
+  unregister: async ({ ctx }: botpress.IntegrationProps) => {
+    /**
+     * This is called when a bot uninstalls the integration.
+     * You should use this handler to clean up resources in the external service.
+     */
+    logger.info('Integration unregistered');
   },
   actions: {
-    createTask: {
-      input: {
-        schema: z.object({
-          listId: z.string(),
-          name: z.string(),
-          description: z.string().optional(),
-        }),
-      },
-      output: {
-        schema: z.object({ id: z.string() }),
-      },
-    },
+    createTask: async ({ ctx, input }: botpress.ActionProps) => {
+      const { stripeClient } = ctx.state;
+      const { listId, name, description } = input;
+      const task = await stripeClient.createTask(listId, name, description);
+      return { id: task.id };
+    }
   },
-  icon: 'icon.svg',
-  documentation: '/workspaces/stripe/stripe-integration/readme.md',
   channels: {
     comment: {
       messages: {
-        text: {
-          schema: z.object({ text: z.string() }),
-        },
-      },
-      message: {
-        tags: {
-          id: {
-            title: 'Message ID',
-            description: 'Message ID from Stripe',
-          },
-        },
-      },
-      conversation: {
-        tags: {
-          taskId: {
-            title: 'Task ID',
-            description: 'Task ID from Stripe',
-          },
-        },
-      },
-    },
+        text: async () => {
+          throw new NotImplementedError();
+        }
+      }
+    }
   },
-  user: {
-    tags: {
-      id: {
-        title: 'User ID',
-        description: 'User ID from Stripe',
-      },
-    },
-  },
-  register: async ({ config, secrets }) => {
-    // Initialize the Stripe client with the provided secret key
-    const stripeClient = new StripeClient(secrets.Secretkey);
-
-    // Store the Stripe client instance in the integration's context
-    return {
-      stripeClient,
-    };
-  },
-  unregister: async () => {
-    // Cleanup logic when the integration is uninstalled
-  },
-  handler: async (event, ctx) => {
-    // Handle incoming events/actions here using the Stripe client
-  },
+  handler: async ({ ctx, event }: botpress.IntegrationProps) => {
+    // Define the main handler logic for your integration.
+    // This function will be executed when the integration receives events or actions.
+    // You can implement the necessary logic here to handle events and actions from Botpress.
+    logger.info('Handler triggered');
+  }
 });

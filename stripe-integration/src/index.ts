@@ -15,7 +15,7 @@ export default new botpress.Integration({
      * This is called when a bot installs the integration.
      * Use this handler to instantiate resources in the external service and ensure that the configuration is valid.
      */
-    logger.info('Registering the integration');
+    logger.info('Registering the integration complete');
     // Add your implementation here
   },
   unregister: async () => {

@@ -1,12 +1,18 @@
 import { IntegrationDefinition } from '@botpress/sdk';
 import z from 'zod';
 import { name as integrationName } from './package.json';
-
+import { sentry as sentryHelpers } from '@botpress/sdk-addons'
+ 
+import { INTEGRATION_NAME } from './src/const'
+import { actions, events, configuration, channels, states, user, sercrets } from './src/definitions'
+ 
 const INTEGRATION_NAME = integrationName;
 
 export default new IntegrationDefinition({
   name: INTEGRATION_NAME,
+  title: 'Stripe',
   version: '0.1.1',
+  readme: 'README.md',
   configuration: {
     schema: z.object({
       Publishablekey: z.string(),

@@ -1,21 +1,16 @@
-const integration = {
-    // ...
-   
-    events: {
-      'issue.created': async (ctx, event) => {
-        // An event handler for when a new issue is created in Linear
-        // The event parameter contains information about the event
-        // Use this to update your bot's state, trigger flows, etc.
-      },
-   
-      'chat.opened': async (ctx, event) => {
-        // An event handler for when a chat is opened in WhatsApp
-        // The event parameter contains information about the event
-        // Use this to update your bot's state, trigger flows, etc.
-      },
-   
-      // Add more event handlers as needed
+import z from 'zod';
+
+export const events = {
+  taskCreated: {
+    schema: z.object({ id: z.string() }),
+    handler: async (ctx, event) => {
+      // Implement the logic for the taskCreated event
     },
-   
-    // ...
-  }
+  },
+  'issue.created': async (ctx, event) => {
+    // Implement the logic for the issue.created event
+  },
+  'chat.opened': async (ctx, event) => {
+    // Implement the logic for the chat.opened event
+  },
+};

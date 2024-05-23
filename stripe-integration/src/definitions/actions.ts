@@ -1,3 +1,6 @@
+import { name as integrationName } from '././package.json';
+const INTEGRATION_NAME = integrationName;
+import { IntegrationDefinition } from '@botpress/sdk';
 import z from 'zod';
 
 export const actions = {
@@ -12,12 +15,12 @@ export const actions = {
     output: {
       schema: z.object({ id: z.string() }),
     },
-    handler: async (ctx, { listId, name, description }) => {
+    handler: async () => {
       // Implement task creation logic
       throw new Error('Not Implemented');
     },
   },
-  addReaction: async (ctx, conversationId, messageId, reaction) => {
+  addReaction: async (_ctx: conversationId, messageId, reaction) => {
     const token = ctx.config.botToken;
     const channelId = ctx.mapping[conversationId];
 

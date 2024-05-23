@@ -1,12 +1,16 @@
+import { name as integrationName } from '/workspaces/stripe/stripe-integration/package.json';
+const INTEGRATION_NAME = integrationName;
 import { IntegrationDefinition } from '@botpress/sdk';
 import z from 'zod';
-import { name as integrationName } from './package.json';
 
-const INTEGRATION_NAME = integrationName;
+import { cards } from '/workspaces/stripe/stripe-integration/src/definitions/cards.ts'; // Import the cards definition
+
 
 export default new IntegrationDefinition({
   name: INTEGRATION_NAME,
-  version: '0.1.1',
+  title: 'Stripe',
+  version: '0.1.3',
+  readme: 'README.md',
   configuration: {
     schema: z.object({
       Publishablekey: z.string(),
@@ -19,7 +23,7 @@ export default new IntegrationDefinition({
     },
   },
   actions: {
-    createTask: {
+    stripe: {
       input: {
         schema: z.object({
           listId: z.string(),
@@ -33,7 +37,7 @@ export default new IntegrationDefinition({
     },
   },
   icon: 'icon.svg',
-  documentation: './readme.md',
+  documentation: '/workspaces/stripe/stripe-integration/README.md',
   channels: {
     comment: {
       messages: {
@@ -67,4 +71,5 @@ export default new IntegrationDefinition({
       },
     },
   },
+  cards: cards, // Include the imported cards definition
 });

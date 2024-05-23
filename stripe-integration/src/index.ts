@@ -1,4 +1,9 @@
-import * as botpress from '.botpress'; // Correct the import path as necessary
+import * as botpress from '@botpress/sdk';
+import cards from './src/definitions/cards'; // Correct the import path as necessary
+import { IntegrationContext } from '@botpress/sdk';
+
+import { cards } from '/workspaces/stripe/stripe-integration/src/definitions/cards.ts'; // Import the cards definition
+
 
 const logger = console;
 logger.info('starting integration');
@@ -26,11 +31,22 @@ export default new botpress.Integration({
     logger.info('Unregistering the integration - Complete');
     // Add your implementation here
   },
-  handler: async () => {
-    throw new NotImplementedError();
+  handler: async (ctx: IntegrationContext) => {
+    // Handler for processing cards
+    const cardName = ctx.event.metadata.cardName;
+    if (cardName && cards[cardName]) {
+      try {
+        return await cards[cardName].handler(ctx, ctx.event.payload);
+      } catch (error) {
+        logger.error(`Error handling card '${cardName}':`, error);
+        throw error;
+      }
+    } else {
+      throw new NotImplementedError('Card not implemented');
+    }
   },
   actions: {
-    createTask: async (payload: any) => {
+    stripe: async (payload: any) => {
       /**
        * Define the logic for the createTask action here.
        * The payload parameter contains the data passed to this action.

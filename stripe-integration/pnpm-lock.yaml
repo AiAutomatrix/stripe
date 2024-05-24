@@ -1140,7 +1140,7 @@ packages:
       d: 1.0.2
       es5-ext: 0.10.64
       es6-iterator: 2.0.3
-      memoizee: 0.4.16
+      memoizee: 0.4.17
       timers-ext: 0.1.7
     dev: true
 
@@ -2128,9 +2128,9 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /memoizee@0.4.16:
-    resolution: {integrity: sha512-eOxQqGfogqdcQ2jeyLgsTp91bFOdbjaiJ1P0ZeDt1HHT1+ektm2u+raWDytppt8SMZ1fP2sIWlTbZukHhMKhiQ==}
-    engines: {node: '>=.0.12'}
+  /memoizee@0.4.17:
+    resolution: {integrity: sha512-DGqD7Hjpi/1or4F/aYAspXKNm5Yili0QDAFAY4QYvpqpgiY6+1jOfqpmByzjxbWd/T9mChbCArXAbDAsTm5oXA==}
+    engines: {node: '>=0.12'}
     dependencies:
       d: 1.0.2
       es5-ext: 0.10.64

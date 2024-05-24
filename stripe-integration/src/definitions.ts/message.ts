@@ -1,6 +1,6 @@
 const integration = {
     // ...
-    messages: {
+    message: {
       sendMessage: async (ctx, conversationId, message) => {
         // Implement logic to send message to the external platform
         // using its API

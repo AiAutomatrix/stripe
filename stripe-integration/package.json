@@ -1,6 +1,6 @@
 {
-  "name": "bigtimetreat",
-  "integrationName": "bigtimetreat",
+  "name": "payment",
+  "integrationName": "payment",
   "scripts": {
     "type:check": "tsc --noEmit",
     "start": "ts-node src/index.ts",

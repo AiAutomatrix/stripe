@@ -5,7 +5,6 @@ import { cards } from '/workspaces/stripe/stripe-integration/src/definitions/car
 
 const INTEGRATION_NAME = integrationName;
 
-
 export default new IntegrationDefinition({
   name: INTEGRATION_NAME,
   title: 'Stripe',
@@ -18,10 +17,7 @@ export default new IntegrationDefinition({
     }),
   },
   events: {
-    taskCreated: {
-      schema: z.object({ id: z.string() }),
-    },
-    hook: {
+    webhook: {
       schema: z.object({ id: z.string() }),
     },
   },
@@ -34,18 +30,6 @@ export default new IntegrationDefinition({
       },
       output: {
         schema: z.object({ code: z.string(), htmlPath: z.string() }),
-      },
-    },
-    createTask: {
-      input: {
-        schema: z.object({
-          listId: z.string(),
-          name: z.string(),
-          description: z.string().optional(),
-        }),
-      },
-      output: {
-        schema: z.object({ id: z.string() }),
       },
     },
   },

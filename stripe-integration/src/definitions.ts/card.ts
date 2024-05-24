@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { IntegrationContext } from '@botpress/sdk';
 
-export const cards = {
+export const card = {
   'stripe-button': {
     displayName: 'Stripe Button',
     description: 'Displays a Stripe button for payments',

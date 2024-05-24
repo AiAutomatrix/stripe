@@ -31,7 +31,7 @@ type Simplify<T> = T extends (...args: infer A) => infer R
   : T
 
 type TIntegration = {
-  name: "bigtimetreat"
+  name: "payment"
   version: "0.1.3"
   configuration: configuration.Configuration
   actions: actions.Actions

@@ -1,4 +1,4 @@
-export const states = {
+export const state = {
     getUserState: async (ctx, userId) => {
       // Implement logic to retrieve the current state for the user
     },

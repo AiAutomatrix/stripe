@@ -1,12 +1,7 @@
 import * as botpress from '@botpress/sdk';
-import cards from './src/definitions/cards'; // Correct the import path as necessary
-import { IntegrationContext } from '@botpress/sdk';
-
-import { cards } from '/workspaces/stripe/stripe-integration/src/definitions/cards.ts'; // Import the cards definition
-
 
 const logger = console;
-logger.info('starting integration');
+logger.info('Starting integration');
 
 class NotImplementedError extends Error {
   constructor() {
@@ -18,7 +13,8 @@ export default new botpress.Integration({
   register: async () => {
     /**
      * This is called when a bot installs the integration.
-     * Use this handler to instantiate resources in the external service and ensure that the configuration is valid.
+     * Use this handler to instantiate resources in the external service
+     * and ensure that the configuration is valid.
      */
     logger.info('Registering the integration - Complete');
     // Add your implementation here
@@ -31,30 +27,15 @@ export default new botpress.Integration({
     logger.info('Unregistering the integration - Complete');
     // Add your implementation here
   },
-  handler: async (ctx: IntegrationContext) => {
-    // Handler for processing cards
-    const cardName = ctx.event.metadata.cardName;
-    if (cardName && cards[cardName]) {
-      try {
-        return await cards[cardName].handler(ctx, ctx.event.payload);
-      } catch (error) {
-        logger.error(`Error handling card '${cardName}':`, error);
-        throw error;
-      }
-    } else {
-      throw new NotImplementedError('Card not implemented');
-    }
+  handler: async () => {
+    /**
+     * This is the main handler for incoming messages or events from external services.
+     * Implement your logic here to handle these messages.
+     */
+    // Add your implementation here
   },
   actions: {
-    stripe: async (payload: any) => {
-      /**
-       * Define the logic for the createTask action here.
-       * The payload parameter contains the data passed to this action.
-       */
-      logger.info('Creating a task with payload:', payload);
-      // Add your implementation here
-      throw new NotImplementedError();
-    },
+    // Define custom actions here
   },
   channels: {
     comment: {

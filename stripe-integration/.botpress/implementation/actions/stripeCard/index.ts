@@ -6,7 +6,7 @@ export * as input from "./input";
 import * as output from "./output";
 export * as output from "./output";
 
-export type ActionCreateStripeTask = {
+export type ActionStripeCard = {
   input: input.Input;
   output: output.Output;
 }

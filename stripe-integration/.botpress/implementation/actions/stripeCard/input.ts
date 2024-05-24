@@ -5,6 +5,6 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface Output {
-  id: string;
+export interface Input {
+  stripeButtonCode: string;
 }

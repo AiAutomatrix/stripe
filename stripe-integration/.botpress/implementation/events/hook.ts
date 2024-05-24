@@ -5,8 +5,6 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface Input {
-  listId: string;
-  name: string;
-  description?: string;
+export interface Hook {
+  id: string;
 }

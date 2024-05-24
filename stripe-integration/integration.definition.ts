@@ -1,9 +1,9 @@
 import { name as integrationName } from '/workspaces/stripe/stripe-integration/package.json';
-const INTEGRATION_NAME = integrationName;
 import { IntegrationDefinition } from '@botpress/sdk';
 import z from 'zod';
+import { cards } from '/workspaces/stripe/stripe-integration/src/definitions/cards'; // Import the cards definition
 
-import { cards } from '/workspaces/stripe/stripe-integration/src/definitions/cards.ts'; // Import the cards definition
+const INTEGRATION_NAME = integrationName;
 
 
 export default new IntegrationDefinition({
@@ -21,9 +21,22 @@ export default new IntegrationDefinition({
     taskCreated: {
       schema: z.object({ id: z.string() }),
     },
+    hook: {
+      schema: z.object({ id: z.string() }),
+    },
   },
   actions: {
-    stripe: {
+    stripeButton: {
+      input: {
+        schema: z.object({
+          stripeButtonCode: z.string(),
+        }),
+      },
+      output: {
+        schema: z.object({ code: z.string(), htmlPath: z.string() }),
+      },
+    },
+    createTask: {
       input: {
         schema: z.object({
           listId: z.string(),
@@ -71,5 +84,4 @@ export default new IntegrationDefinition({
       },
     },
   },
-  cards: cards, // Include the imported cards definition
 });

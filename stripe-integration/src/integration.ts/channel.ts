@@ -1,4 +1,4 @@
-import { name as integrationName } from '././package.json';
+import { name as integrationName } from '/workspaces/stripe/stripe-integration/package.json';
 const INTEGRATION_NAME = integrationName;
 import { IntegrationDefinition } from '@botpress/sdk';
 import z from 'zod';
@@ -23,7 +23,7 @@ export const channels = {
       tags: {
         id: {
           title: 'Message ID',
-          description: 'Message ID from Stripe',
+          description: 'Message ID from Botpress',
         },
       },
     },
@@ -31,7 +31,7 @@ export const channels = {
       tags: {
         taskId: {
           title: 'Task ID',
-          description: 'Task ID from Stripe',
+          description: 'Task ID from Botpress',
         },
       },
     },

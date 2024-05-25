@@ -1,3 +1,4 @@
+// integration.definition.ts file
 import { name as integrationName } from '/workspaces/stripe/stripe-integration/package.json';
 import { IntegrationDefinition } from '@botpress/sdk';
 import z from 'zod';

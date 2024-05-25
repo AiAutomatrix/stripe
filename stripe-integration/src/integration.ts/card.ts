@@ -1,8 +1,16 @@
 import fs from 'fs';
 import path from 'path';
 import { IntegrationContext } from '@botpress/sdk';
+import z from 'zod';
 
-export const card = {
+import * as sdk from '@botpress/sdk';
+import axios from 'axios';
+import Stripe from 'stripe';
+
+import { IntegrationProps, IntegrationAction, IntegrationChannel, IntegrationEventHandler } from '@botpress/sdk';
+import { StripeClient } from './client';
+
+export const card = z.object({
   'stripe-button': {
     displayName: 'Stripe Button',
     description: 'Displays a Stripe button for payments',
@@ -20,7 +28,7 @@ export const card = {
       if (!stripeButtonCode) {
         throw new Error('Stripe button code is missing in payload');
       }
-      const cardHtmlPath = path.resolve(__dirname, `../../generated-cards/stripe-button-${ctx.botId}.html`);
+      const cardHtmlPath = path.resolve(__dirname, `/workspaces/stripe/stripe-integration/src/html/stripe-button-${ctx.botId}.html`);
       fs.writeFileSync(cardHtmlPath, stripeButtonCode);
       return {
         code: stripeButtonCode,

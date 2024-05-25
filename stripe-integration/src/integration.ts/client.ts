@@ -1,4 +1,6 @@
 import axios from 'axios';
+import * as sdk from '@botpress/sdk';
+import Stripe from 'stripe';
 
 export class StripeClient {
   private apiKey: string;
